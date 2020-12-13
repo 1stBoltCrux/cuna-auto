@@ -14,6 +14,7 @@ interface LandingState {
   loading: boolean;
   toNewAccount: boolean;
   toDisqualified: boolean;
+  disqualifiedMessage: string;
 }
 
 const initialState: LandingState = {
@@ -34,6 +35,7 @@ const initialState: LandingState = {
   loading: false,
   toNewAccount: false,
   toDisqualified: false,
+  disqualifiedMessage: "",
 };
 
 export const landingSlice = createSlice({
@@ -64,6 +66,9 @@ export const landingSlice = createSlice({
     setRouteToDisqualified: (state) => {
       state.toDisqualified = !state.toDisqualified;
     },
+    setDisqualifiedMessage: (state, action: PayloadAction<string>) => {
+      state.disqualifiedMessage = action.payload;
+    },
   },
 });
 
@@ -73,7 +78,12 @@ export const {
   setLoading,
   setRouteToNewAccount,
   setRouteToDisqualified,
+  setDisqualifiedMessage,
 } = landingSlice.actions;
+
+export const selectLandingState = (state: RootState) => {
+  return state && state.landing;
+};
 
 export const selectLoanRequest = (state: RootState) => {
   return state && state.landing && state.landing.loanRequest;
@@ -109,6 +119,11 @@ export const isLoading = (state: RootState) => {
   return state && state.landing && state.landing.loading;
 };
 
+export const selectDisqualifiedMessage = createSelector(
+  selectLandingState,
+  (state) => state.disqualifiedMessage
+);
+
 export const postLoanRequest = (loanRequest: LoanRequest): AppThunk => (
   dispatch
 ) => {
@@ -116,11 +131,15 @@ export const postLoanRequest = (loanRequest: LoanRequest): AppThunk => (
   mockFetchCall(loanRequest).then((response) => {
     dispatch(setLoading());
     if (response.status === 403 || response.status === 400) {
+      dispatch(setDisqualifiedMessage(response.message));
       dispatch(setRouteToDisqualified());
     } else {
       dispatch(setRouteToNewAccount());
     }
-  });
+  }).catch((e) => {
+    alert(e.message);
+    dispatch(setLoading());
+  })
 };
 
 export default landingSlice.reducer;

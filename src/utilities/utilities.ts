@@ -16,10 +16,7 @@ const mockFetchCall = (req: LoanRequest): Promise<MockResponse> => {
       const purchasePriceTooHigh =
         +autoPurchasePrice > +estimatedYearlyIncome / 5;
       if (+autoPurchasePrice > 1000000) {
-        resolve({
-          status: 400,
-          message: "400 - Bad Request",
-        });
+        reject(new Error("400 BAD REQUEST"));
       }
 
       if (estimatedCreditScore < 600 || purchasePriceTooHigh) {
@@ -38,4 +35,18 @@ const mockFetchCall = (req: LoanRequest): Promise<MockResponse> => {
   });
 };
 
-export { mockFetchCall };
+const emailValidator = (email: string) => {
+  //regex shamelessy borrowed from  - https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  const regExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regExp.test(email.toLowerCase());
+};
+
+const passwordValidator = (password: string) => {
+  // regex shamelessly learned in Edwin Diaz's Udemy course "Learn to use Regular Expressions (Regex) in all programming languages and tools the easy way with Edwin Diaz"
+  // uses look-ahead to check for at least one capital letter, lowercase letter,
+  // digit and selection of symbols, white spaces are excluded as well - length min of 8 chars, max of 20
+  const regExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*\-\\])\S{8,20}$/g;
+  return regExp.test(password);
+};
+
+export { mockFetchCall, emailValidator, passwordValidator };
