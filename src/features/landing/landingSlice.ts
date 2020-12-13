@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
-import { AppThunk, RootState } from "../../app/store";
-import { LoanRequest } from "../../interfaces/interfaces";
+import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import { LoanRequest, Errors } from "../../interfaces/interfaces";
 
 interface LandingState {
   loanRequest: LoanRequest;
+  errors: Errors;
 }
 
 const initialState: LandingState = {
@@ -12,8 +12,15 @@ const initialState: LandingState = {
     autoPurchasePrice: 0,
     autoMake: "",
     autoModel: "",
-    userEstimatedYearlyIncome: 0,
-    userEstimatedCreditScore: 0,
+    estimatedYearlyIncome: 0,
+    estimatedCreditScore: 0,
+  },
+  errors: {
+    autoPurchasePrice: null,
+    autoMake: null,
+    autoModel: null,
+    estimatedYearlyIncome: null,
+    estimatedCreditScore: null,
   },
 };
 
@@ -29,6 +36,18 @@ export const landingSlice = createSlice({
       // immutable state based off those changes
       //   state.value += 1;
     },
+    setErrors: (
+      state,
+      action: PayloadAction<{
+        inputName: string;
+        inputErrorValue: string | null;
+      }>
+    ) => {
+      state.errors = {
+        ...state.errors,
+        [action.payload.inputName]: action.payload.inputErrorValue,
+      };
+    },
     // Use the PayloadAction type to declare the contents of `action.payload`
     // incrementByAmount: (state, action: PayloadAction<number>) => {
     //   state.value += action.payload;
@@ -36,7 +55,7 @@ export const landingSlice = createSlice({
   },
 });
 
-export const { setLoanRequest } = landingSlice.actions;
+export const { setLoanRequest, setErrors } = landingSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -52,7 +71,19 @@ export const { setLoanRequest } = landingSlice.actions;
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectLoanRequest = (state: RootState) => {
-  return state.landing.loanRequest;
+  return state && state.landing && state.landing.loanRequest;
 };
+export const selectErrors = (state: RootState) => {
+  return state && state.landing && state.landing.errors;
+};
+export const isValid = createSelector(selectErrors, (errors: Errors) => {
+  let errorsExist = false;
+  Object.keys(errors).forEach((key) => {
+    if (errors[key as keyof Errors]) {
+      errorsExist = true;
+    }
+  });
+  return errorsExist;
+});
 
 export default landingSlice.reducer;

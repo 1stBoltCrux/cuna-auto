@@ -2,10 +2,19 @@ interface LoanRequest {
     autoPurchasePrice: number;
     autoMake: string;
     autoModel: string;
-    userEstimatedYearlyIncome: number;
-    userEstimatedCreditScore: number;
+    estimatedYearlyIncome: number;
+    estimatedCreditScore: number;
+}
+
+interface Errors {
+    autoPurchasePrice: string | null,
+    autoMake: string | null,
+    autoModel: string | null,
+    estimatedYearlyIncome: string | null,
+    estimatedCreditScore: string | null,
 }
 
 export type {
-    LoanRequest
+    LoanRequest,
+    Errors
 }

@@ -6,17 +6,15 @@ const Input = ({
   label,
   name,
   placeholder,
-  min,
-  max,
-  type
+  type,
+  errors
 }: {
-  handleChange: (inputName: string, inputValue: string | number) => void;
+  handleChange: (inputName: string, inputValue: string) => void;
   label: string;
   name: string;
   placeholder: string;
-  min?: number;
-  max?: number;
   type: string;
+  errors: {[key: string]: any}
 }) => {
   return (
     <StyledInput>
@@ -25,8 +23,11 @@ const Input = ({
         onChange={(e) => handleChange(name, e.target.value)}
         name={name}
         placeholder={placeholder}
-        type="text"
+        type={type}
       />
+      {
+        errors[name] ? <p>{errors[name]}</p> : null
+      }
     </StyledInput>
   );
 };

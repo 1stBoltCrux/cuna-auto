@@ -4,6 +4,7 @@ const StyledInput = styled.div`
     margin-bottom: 16px;
 
  input {
+    margin-bottom: 4px;
     box-sizing: border-box;
     border: 1px solid #BFC9CA;
     border-radius: 5px;
@@ -16,6 +17,11 @@ const StyledInput = styled.div`
  label {
     display: block;
     margin-bottom: 8px;
+ }
+
+ p {
+    margin: 0;
+    color: red;
  }
 `;
 export {
