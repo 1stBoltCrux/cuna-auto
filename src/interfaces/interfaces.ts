@@ -3,7 +3,7 @@ interface LoanRequest {
     autoMake: string;
     autoModel: string;
     userEstimatedYearlyIncome: number;
-    UserEstimatedCreditScore: number;
+    userEstimatedCreditScore: number;
 }
 
 export type {
