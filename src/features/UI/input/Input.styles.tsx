@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledInput = styled.div`
     margin-bottom: 16px;
-
+   min-height: 90px;
  input {
     margin-bottom: 4px;
     box-sizing: border-box;

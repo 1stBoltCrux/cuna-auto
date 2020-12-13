@@ -12,6 +12,7 @@ const Landing = () => {
   const loanRequestState = useSelector(selectLoanRequest);
   const errors = useSelector(selectErrors)
   const dispatch = useDispatch();
+  const canSubmit = useSelector(isValid)
 
   const validate = (inputName: string, inputValue: string) => {
     switch (inputName) {
@@ -103,6 +104,7 @@ const Landing = () => {
           <Button
             handleSubmit={handleSubmit}
             text="Submit Application"
+            disabled={canSubmit}
           ></Button>
         </div>
       </div>

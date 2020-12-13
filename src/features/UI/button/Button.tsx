@@ -1,10 +1,10 @@
 import React from "react";
 import { StyledButton } from "./Button.styles";
 
-const Button = ({ text, handleSubmit }: { text: string, handleSubmit: () => void}) => {
+const Button = ({ text, handleSubmit, disabled }: { text: string, handleSubmit: () => void, disabled?: boolean}) => {
   return (
     <StyledButton>
-      <button onClick={() => handleSubmit()}>{text}</button>
+      <button disabled={disabled} onClick={() => handleSubmit()}>{text}</button>
     </StyledButton>
   );
 };
