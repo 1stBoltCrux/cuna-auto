@@ -6,7 +6,7 @@ import {
   selectErrors,
   setUser,
   setErrors,
-  selectIsValid
+  isValid
 } from "./newAccountSlice";
 import Input from "../UI/input/Input";
 import Button from "../UI/button/Button";
@@ -16,9 +16,8 @@ const NewAccount = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const errors = useSelector(selectErrors);
-  const isvalid = useSelector(selectIsValid);
+  const canSubmit = useSelector(isValid);
 
-  console.log(errors)
 
   const handleChange = (inputName: string, inputValue: string) => {
     validate(inputName, inputValue);
@@ -96,7 +95,7 @@ const NewAccount = () => {
         handleChange={handleChange}
         errors={errors}
       ></Input>
-      <Button handleSubmit={() => null} text="Create Account"/>
+      <Button disabled={canSubmit} handleSubmit={() => alert("Account successfully created!")} text="Create Account"/>
       </div>
 
     </StyledNewAccountContainer>

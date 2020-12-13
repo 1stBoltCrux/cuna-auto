@@ -5,7 +5,6 @@ import { User, NewAccountErrors } from "../../interfaces/interfaces";
 interface NewAccountState {
   user: User;
   errors: NewAccountErrors;
-  isValid: boolean;
 }
 
 const initialState: NewAccountState = {
@@ -17,8 +16,7 @@ const initialState: NewAccountState = {
     username: "",
     password: "",
     repeatPassword: "",
-  },
-  isValid: false,
+  }
 };
 
 export const newAccountSlice = createSlice({
@@ -63,13 +61,6 @@ export const selectUser = createSelector(
   }
 );
 
-export const selectIsValid = createSelector(
-    selectNewAccountState,
-    (newAccountState) => {
-        return newAccountState.isValid;
-    }
-)
-
 export const isValid = createSelector(
   selectErrors,
   selectUser,
@@ -85,6 +76,7 @@ export const isValid = createSelector(
         errorsExist = true;
       }
     });
+    console.log(errorsExist)
     return errorsExist;
   }
 );

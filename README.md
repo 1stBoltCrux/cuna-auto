@@ -1,3 +1,14 @@
+# Cuna Auto Loan Service
+
+Project is bootstrapped with CRA (CRA readme remains below) - and templated for TS and Redux - [https://github.com/reduxjs/cra-template-redux-typescript]
+
+## Running code locally - 
+ * yarn start (boots on localhost:3000)
+
+ ## Building - 
+ * yarn build (builds to 'build' folder)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts

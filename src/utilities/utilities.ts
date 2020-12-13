@@ -8,13 +8,16 @@ const mockFetchCall = (req: LoanRequest): Promise<MockResponse> => {
       message: "QUALIFIED",
     };
     setTimeout(() => {
+      
       const {
         autoPurchasePrice,
         estimatedYearlyIncome,
         estimatedCreditScore,
       } = req;
+
       const purchasePriceTooHigh =
         +autoPurchasePrice > +estimatedYearlyIncome / 5;
+
       if (+autoPurchasePrice > 1000000) {
         reject(new Error("400 BAD REQUEST"));
       }
