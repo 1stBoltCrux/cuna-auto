@@ -1,5 +1,5 @@
 import React from 'react';
-import { Landing } from './features/landing/Landing';
+import  Landing  from './features/landing/Landing';
 import {
   BrowserRouter as Router,
   Switch,

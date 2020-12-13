@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { StyledLandingContainer } from './Landing.styles';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { StyledLandingContainer } from "./Landing.styles";
+import Input from "../UI/input/Input";
 // import {
 //   decrement,
 //   increment,
@@ -9,14 +10,20 @@ import { StyledLandingContainer } from './Landing.styles';
 //   selectCount,
 // } from './counterSlice';
 
-export function Landing() {
-//   const count = useSelector(selectCount);
+const Landing = () => {
+  //   const count = useSelector(selectCount);
   const dispatch = useDispatch();
-//   const [incrementAmount, setIncrementAmount] = useState('2');
+  //   const [incrementAmount, setIncrementAmount] = useState('2');
 
   return (
     <StyledLandingContainer>
-      <p>Landing component.</p>
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+      <Input />
     </StyledLandingContainer>
   );
-}
+};
+
+export default Landing;
