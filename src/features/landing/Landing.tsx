@@ -1,40 +1,63 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { StyledLandingContainer } from "./Landing.styles";
 import Input from "../UI/input/Input";
-// import {
-//   decrement,
-//   increment,
-//   incrementByAmount,
-//   incrementAsync,
-//   selectCount,
-// } from './counterSlice';
 
 const Landing = () => {
+  const [formState, setFormState] = useState({
+    autoPurchasePrice: 0,
+    autoMake: "",
+    autoModel: "",
+    userEstimatedYearlyIncome: 0,
+    userEstimatedCreditScore: 0,
+  });
   //   const count = useSelector(selectCount);
   const dispatch = useDispatch();
   //   const [incrementAmount, setIncrementAmount] = useState('2');
 
+  const handleChange = (inputName: string, inputValue: string | number) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      [inputName]: inputValue,
+    }));
+  };
+
   return (
     <StyledLandingContainer>
       <div className="cuna-auto-loan-form">
+        <div className="cuna-auto-loan-inputs">
         <Input
+          handleChange={handleChange}
           placeholder="Auto Purchase Price"
-          name="auto-puchase-price"
+          name="autoPurchasePrice"
           label="Auto Purchase Price"
         />
-        <Input placeholder="Auto Make" name="auto-make" label="Auto Make" />
-        <Input placeholder="Auto Model" name="auto-model" label="Auto Model" />
+        <Input
+          placeholder="Auto Make"
+          name="autoMake"
+          label="Auto Make"
+          handleChange={handleChange}
+        />
+        <Input
+          placeholder="Auto Model"
+          name="autoModel"
+          label="Auto Model"
+          handleChange={handleChange}
+        />
         <Input
           placeholder="Estimated Income"
-          name="estimated-income"
+          name="estimatedIncome"
           label="Estimated Income"
+          handleChange={handleChange}
         />
         <Input
           placeholder="Estimated Credit Score"
-          name="estimated-credit-score"
+          name="estimatedCreditScore"
           label="Estimated Credit Score"
+          handleChange={handleChange}
         />
+        </div>
+      
       </div>
     </StyledLandingContainer>
   );

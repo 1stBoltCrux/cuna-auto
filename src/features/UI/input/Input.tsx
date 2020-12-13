@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyledInput } from "./Input.styles";
 
 const Input = ({
+  handleChange,
   label,
   name,
   placeholder,
 }: {
+  handleChange: (inputName: string, inputValue: string | number) => void;
   label: string;
   name: string;
   placeholder: string;
@@ -13,7 +15,12 @@ const Input = ({
   return (
     <StyledInput>
       <label>{label}</label>
-      <input name={name} placeholder={placeholder} type="text" />
+      <input
+        onChange={(e) => handleChange(name, e.target.value)}
+        name={name}
+        placeholder={placeholder}
+        type="text"
+      />
     </StyledInput>
   );
 };
