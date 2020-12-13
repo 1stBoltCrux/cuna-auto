@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { StyledInput } from './Input.styles';
+import React, { useState } from "react";
+import { StyledInput } from "./Input.styles";
 
-const Input = () => {
-
+const Input = ({
+  label,
+  name,
+  placeholder,
+}: {
+  label: string;
+  name: string;
+  placeholder: string;
+}) => {
   return (
     <StyledInput>
-        <input type="text"/>
+      <label>{label}</label>
+      <input name={name} placeholder={placeholder} type="text" />
     </StyledInput>
   );
-}
+};
 
 export default Input;

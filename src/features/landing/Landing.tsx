@@ -17,11 +17,25 @@ const Landing = () => {
 
   return (
     <StyledLandingContainer>
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-      <Input />
+      <div className="cuna-auto-loan-form">
+        <Input
+          placeholder="Auto Purchase Price"
+          name="auto-puchase-price"
+          label="Auto Purchase Price"
+        />
+        <Input placeholder="Auto Make" name="auto-make" label="Auto Make" />
+        <Input placeholder="Auto Model" name="auto-model" label="Auto Model" />
+        <Input
+          placeholder="Estimated Income"
+          name="estimated-income"
+          label="Estimated Income"
+        />
+        <Input
+          placeholder="Estimated Credit Score"
+          name="estimated-credit-score"
+          label="Estimated Credit Score"
+        />
+      </div>
     </StyledLandingContainer>
   );
 };
