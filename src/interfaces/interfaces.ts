@@ -14,13 +14,26 @@ interface Errors {
     estimatedCreditScore: string | null,
 }
 
+interface NewAccountErrors {
+    username: string,
+    password: string,
+    repeatPassword: string,
+}
+
 interface MockResponse {
     status: number;
     message: string;
 }
 
+interface User {
+    password: string;
+    username: string;
+}
+
 export type {
+    User,
     LoanRequest,
     Errors,
-    MockResponse
+    MockResponse,
+    NewAccountErrors
 }
