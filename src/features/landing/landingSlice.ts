@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 import { AppThunk, RootState } from "../../app/store";
 import { LoanRequest } from "../../interfaces/interfaces";
 
@@ -50,6 +51,8 @@ export const { setLoanRequest } = landingSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-// export const selectCount = (state: RootState) => state.counter.value;
+export const selectLoanRequest = (state: RootState) => {
+  return state.landing.loanRequest;
+};
 
 export default landingSlice.reducer;

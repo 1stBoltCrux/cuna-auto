@@ -1,63 +1,69 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StyledLandingContainer } from "./Landing.styles";
 import Input from "../UI/input/Input";
+import Button from "../UI/button/Button";
+import { min, max } from "../../constants/constants";
+import { LoanRequest } from "../../interfaces/interfaces";
+import { selectLoanRequest, setLoanRequest } from './landingSlice';
 
 const Landing = () => {
-  const [formState, setFormState] = useState({
-    autoPurchasePrice: 0,
-    autoMake: "",
-    autoModel: "",
-    userEstimatedYearlyIncome: 0,
-    userEstimatedCreditScore: 0,
-  });
-  //   const count = useSelector(selectCount);
+  const loanRequestState = useSelector(selectLoanRequest)
   const dispatch = useDispatch();
-  //   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const handleChange = (inputName: string, inputValue: string | number) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      [inputName]: inputValue,
-    }));
+    dispatch(setLoanRequest({...loanRequestState, [inputName]: inputValue}))
   };
+
+  const handleSubmit = () => {
+
+  }
 
   return (
     <StyledLandingContainer>
       <div className="cuna-auto-loan-form">
         <div className="cuna-auto-loan-inputs">
-        <Input
-          handleChange={handleChange}
-          placeholder="Auto Purchase Price"
-          name="autoPurchasePrice"
-          label="Auto Purchase Price"
-        />
-        <Input
-          placeholder="Auto Make"
-          name="autoMake"
-          label="Auto Make"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Auto Model"
-          name="autoModel"
-          label="Auto Model"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Estimated Income"
-          name="estimatedIncome"
-          label="Estimated Income"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Estimated Credit Score"
-          name="estimatedCreditScore"
-          label="Estimated Credit Score"
-          handleChange={handleChange}
-        />
+          <Input
+            type="number"
+            handleChange={handleChange}
+            placeholder="Auto Purchase Price"
+            name="autoPurchasePrice"
+            label="Auto Purchase Price"
+          />
+          <Input
+          type="text"
+            placeholder="Auto Make"
+            name="autoMake"
+            label="Auto Make"
+            handleChange={handleChange}
+          />
+          <Input
+          type="text"
+            placeholder="Auto Model"
+            name="autoModel"
+            label="Auto Model"
+            handleChange={handleChange}
+          />
+          <Input
+            type="number"
+            placeholder="Estimated Income"
+            name="estimatedIncome"
+            label="Estimated Income"
+            handleChange={handleChange}
+          />
+          <Input
+            type="number"
+            placeholder="Estimated Credit Score"
+            name="estimatedCreditScore"
+            label="Estimated Credit Score"
+            handleChange={handleChange}
+            min={min}
+            max={max}
+          />
         </div>
-      
+        <div className="cuna-auto-loan-button-container">
+          <Button handleSubmit={handleSubmit} text="Submit Application"></Button>
+        </div>
       </div>
     </StyledLandingContainer>
   );

@@ -6,11 +6,17 @@ const Input = ({
   label,
   name,
   placeholder,
+  min,
+  max,
+  type
 }: {
   handleChange: (inputName: string, inputValue: string | number) => void;
   label: string;
   name: string;
   placeholder: string;
+  min?: number;
+  max?: number;
+  type: string;
 }) => {
   return (
     <StyledInput>
