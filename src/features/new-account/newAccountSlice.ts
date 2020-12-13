@@ -5,6 +5,7 @@ import { User, NewAccountErrors } from "../../interfaces/interfaces";
 interface NewAccountState {
   user: User;
   errors: NewAccountErrors;
+  isValid: boolean;
 }
 
 const initialState: NewAccountState = {
@@ -15,8 +16,9 @@ const initialState: NewAccountState = {
   errors: {
     username: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
   },
+  isValid: false,
 };
 
 export const newAccountSlice = createSlice({
@@ -47,31 +49,44 @@ export const selectNewAccountState = (state: RootState) => {
   return state && state.newAccount;
 };
 
-export const selectErrors = createSelector(selectNewAccountState, (newAccountState) => {
+export const selectErrors = createSelector(
+  selectNewAccountState,
+  (newAccountState) => {
     return newAccountState.errors;
-})
+  }
+);
 
-export const selectUser = createSelector(selectNewAccountState, (newAccountState) => {
+export const selectUser = createSelector(
+  selectNewAccountState,
+  (newAccountState) => {
     return newAccountState.user;
-})
+  }
+);
 
-//   export const isValid = createSelector(
-//     selectErrors,
-//     selectLoanRequest,
-//     (errors: Errors, loanRequest: LoanRequest) => {
-//       let errorsExist = false;
-//       Object.keys(errors).forEach((key) => {
-//         if (errors[key as keyof Errors]) {
-//           errorsExist = true;
-//         }
-//       });
-//       Object.keys(loanRequest).forEach((key) => {
-//         if (!loanRequest[key as keyof LoanRequest]) {
-//           errorsExist = true;
-//         }
-//       });
-//       return errorsExist;
-//     }
-//   );
+export const selectIsValid = createSelector(
+    selectNewAccountState,
+    (newAccountState) => {
+        return newAccountState.isValid;
+    }
+)
+
+export const isValid = createSelector(
+  selectErrors,
+  selectUser,
+  (errors: NewAccountErrors, loanRequest: User) => {
+    let errorsExist = false;
+    Object.keys(errors).forEach((key) => {
+      if (errors[key as keyof NewAccountErrors]) {
+        errorsExist = true;
+      }
+    });
+    Object.keys(loanRequest).forEach((key) => {
+      if (!loanRequest[key as keyof User]) {
+        errorsExist = true;
+      }
+    });
+    return errorsExist;
+  }
+);
 
 export default newAccountSlice.reducer;

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 const StyledLandingContainer = styled.div`
-  padding: 40px;
-  
   .cuna-auto-loan-form {
     padding: 40px;
     border-radius: 5px;

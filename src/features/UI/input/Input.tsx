@@ -26,7 +26,7 @@ const Input = ({
         type={type}
       />
       {
-        errors[name] ? <p>{errors[name]}</p> : null
+        errors[name] ? <p className="error">{errors[name]}</p> : null
       }
     </StyledInput>
   );

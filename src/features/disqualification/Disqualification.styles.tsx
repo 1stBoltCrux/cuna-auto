@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const StyledDisqualificationContainer = styled.div`
-padding: 40px;
 
 a {
   text-decoration: none;

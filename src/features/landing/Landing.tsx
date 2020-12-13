@@ -69,6 +69,8 @@ const Landing = () => {
           dispatch(setErrors({ inputName, inputErrorValue: null }));
         }
         break;
+      default:
+        break;
     }
   };
 

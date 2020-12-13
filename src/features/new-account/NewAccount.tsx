@@ -6,14 +6,17 @@ import {
   selectErrors,
   setUser,
   setErrors,
+  selectIsValid
 } from "./newAccountSlice";
 import Input from "../UI/input/Input";
+import Button from "../UI/button/Button";
 import { passwordValidator, emailValidator } from "../../utilities/utilities";
 
 const NewAccount = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const errors = useSelector(selectErrors);
+  const isvalid = useSelector(selectIsValid);
 
   console.log(errors)
 
@@ -46,7 +49,6 @@ const NewAccount = () => {
             })
           );
         } else {
-          console.log('password else')
           dispatch(setErrors({ inputName, inputErrorValue: null }));
         }
         break;
@@ -69,6 +71,7 @@ const NewAccount = () => {
 
   return (
     <StyledNewAccountContainer>
+      <div className="cuna-auto-loan-new-account-input-group">
       <Input
         placeholder="Enter Username"
         label="Username"
@@ -93,6 +96,9 @@ const NewAccount = () => {
         handleChange={handleChange}
         errors={errors}
       ></Input>
+      <Button handleSubmit={() => null} text="Create Account"/>
+      </div>
+
     </StyledNewAccountContainer>
   );
 };
