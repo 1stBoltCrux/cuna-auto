@@ -11,6 +11,7 @@ import {
   selectErrors,
   postLoanRequest,
   selectNewAccountRedirect,
+  isLoading,
 } from "./landingSlice";
 import { min, max } from "../../constants/constants";
 import { Redirect } from "react-router-dom";
@@ -21,6 +22,7 @@ const Landing = () => {
   const redirect = useSelector(selectNewAccountRedirect);
   const dispatch = useDispatch();
   const canSubmit = useSelector(isValid);
+  const loading = useSelector(isLoading);
 
   const validate = (inputName: string, inputValue: string) => {
     switch (inputName) {
@@ -77,7 +79,7 @@ const Landing = () => {
     dispatch(postLoanRequest(loanRequestState));
   };
 
-  console.log(redirect)
+  console.log(redirect);
 
   return (
     <StyledLandingContainer>
@@ -125,11 +127,20 @@ const Landing = () => {
           />
         </div>
         <div className="cuna-auto-loan-button-container">
-          <Button
-            handleSubmit={handleSubmit}
-            text="Submit Application"
-            disabled={canSubmit}
-          ></Button>
+          {loading ? (
+            <div className="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          ) : (
+            <Button
+              handleSubmit={handleSubmit}
+              text="Submit Application"
+              disabled={canSubmit}
+            ></Button>
+          )}
         </div>
       </div>
       {redirect ? <Redirect to="/new-account" /> : null}

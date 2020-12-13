@@ -31,7 +31,7 @@ const initialState: LandingState = {
     estimatedCreditScore: null,
   },
   loading: false,
-  toNewAccount: false
+  toNewAccount: false,
 };
 
 export const landingSlice = createSlice({
@@ -63,11 +63,16 @@ export const landingSlice = createSlice({
     },
     setRouteToNewAccount: (state) => {
       state.toNewAccount = true;
-    }
+    },
   },
 });
 
-export const { setLoanRequest, setErrors, setLoading, setRouteToNewAccount } = landingSlice.actions;
+export const {
+  setLoanRequest,
+  setErrors,
+  setLoading,
+  setRouteToNewAccount,
+} = landingSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -98,15 +103,17 @@ export const isValid = createSelector(selectErrors, (errors: Errors) => {
   return errorsExist;
 });
 export const selectNewAccountRedirect = (state: RootState) => {
-  return state && state.landing && state.landing.toNewAccount
-}
+  return state && state.landing && state.landing.toNewAccount;
+};
+export const isLoading = (state: RootState) => {
+  return state && state.landing && state.landing.loading;
+};
 
 export const postLoanRequest = (loanRequest: LoanRequest): AppThunk => (
   dispatch
 ) => {
   dispatch(setLoading());
   mockFetchCall(loanRequest).then(() => {
-    console.log('ok')
     dispatch(setLoading());
     dispatch(setRouteToNewAccount());
   });
