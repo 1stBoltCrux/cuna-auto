@@ -17,6 +17,10 @@ button {
         background-color: #D5DBDB;
         color: #AEB6BF ;
     }
+
+    &:hover {
+        background-color: #2980B9;
+    }
 }
 `;
 export {

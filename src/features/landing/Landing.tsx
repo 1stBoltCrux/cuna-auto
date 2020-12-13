@@ -12,6 +12,7 @@ import {
   postLoanRequest,
   selectNewAccountRedirect,
   isLoading,
+  selectDisqualifiedRedirect,
 } from "./landingSlice";
 import { min, max } from "../../constants/constants";
 import { Redirect } from "react-router-dom";
@@ -19,10 +20,11 @@ import { Redirect } from "react-router-dom";
 const Landing = () => {
   const loanRequestState = useSelector(selectLoanRequest);
   const errors = useSelector(selectErrors);
-  const redirect = useSelector(selectNewAccountRedirect);
+  const newAccountRedirect = useSelector(selectNewAccountRedirect);
   const dispatch = useDispatch();
   const canSubmit = useSelector(isValid);
   const loading = useSelector(isLoading);
+  const disqualifiedRedirect = useSelector(selectDisqualifiedRedirect);
 
   const validate = (inputName: string, inputValue: string) => {
     switch (inputName) {
@@ -38,7 +40,7 @@ const Landing = () => {
           dispatch(setErrors({ inputName, inputErrorValue: null }));
         }
         break;
-      case "estimatedIncome":
+      case "estimatedYearlyIncome":
         if (!parseInt(inputValue)) {
           dispatch(
             setErrors({
@@ -79,10 +81,19 @@ const Landing = () => {
     dispatch(postLoanRequest(loanRequestState));
   };
 
-  console.log(redirect);
-
   return (
     <StyledLandingContainer>
+      <div className="cuna-auto-loan-marketing-copy">
+        <h3>Apply for an Auto Loan</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nostrum
+          id ipsam, repellendus atque maiores harum voluptates sit eligendi
+          repellat. At et doloribus minus, sunt eum quidem nemo ducimus in!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nostrum
+          id ipsam, repellendus atque maiores harum voluptates sit eligendi
+          repellat. At et doloribus minus, sunt eum quidem nemo ducimus in!
+        </p>
+      </div>
       <div className="cuna-auto-loan-form">
         <div className="cuna-auto-loan-inputs">
           <Input
@@ -112,7 +123,7 @@ const Landing = () => {
           <Input
             type="text"
             placeholder="Estimated Income"
-            name="estimatedIncome"
+            name="estimatedYearlyIncome"
             label="Estimated Income"
             handleChange={handleChange}
             errors={errors}
@@ -143,7 +154,8 @@ const Landing = () => {
           )}
         </div>
       </div>
-      {redirect ? <Redirect to="/new-account" /> : null}
+      {newAccountRedirect ? <Redirect to="/new-account" /> : null}
+      {disqualifiedRedirect ? <Redirect to="/disqualified" /> : null}
     </StyledLandingContainer>
   );
 };

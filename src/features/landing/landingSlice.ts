@@ -5,7 +5,7 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
-import { LoanRequest, Errors } from "../../interfaces/interfaces";
+import { LoanRequest, Errors, MockResponse } from "../../interfaces/interfaces";
 import { mockFetchCall } from "../../utilities/utilities";
 
 interface LandingState {
@@ -13,6 +13,7 @@ interface LandingState {
   errors: Errors;
   loading: boolean;
   toNewAccount: boolean;
+  toDisqualified: boolean;
 }
 
 const initialState: LandingState = {
@@ -32,6 +33,7 @@ const initialState: LandingState = {
   },
   loading: false,
   toNewAccount: false,
+  toDisqualified: false,
 };
 
 export const landingSlice = createSlice({
@@ -40,11 +42,6 @@ export const landingSlice = createSlice({
   reducers: {
     setLoanRequest: (state, action: PayloadAction<LoanRequest>) => {
       state.loanRequest = action.payload;
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      //   state.value += 1;
     },
     setErrors: (
       state,
@@ -62,7 +59,10 @@ export const landingSlice = createSlice({
       state.loading = !state.loading;
     },
     setRouteToNewAccount: (state) => {
-      state.toNewAccount = true;
+      state.toNewAccount = !state.toNewAccount;
+    },
+    setRouteToDisqualified: (state) => {
+      state.toDisqualified = !state.toDisqualified;
     },
   },
 });
@@ -72,38 +72,38 @@ export const {
   setErrors,
   setLoading,
   setRouteToNewAccount,
+  setRouteToDisqualified,
 } = landingSlice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-// export const incrementAsync = (amount: number): AppThunk => (dispatch) => {
-//   setTimeout(() => {
-//     dispatch(incrementByAmount(amount));
-//   }, 1000);
-// };
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectLoanRequest = (state: RootState) => {
   return state && state.landing && state.landing.loanRequest;
 };
 export const selectErrors = (state: RootState) => {
   return state && state.landing && state.landing.errors;
 };
-export const isValid = createSelector(selectErrors, (errors: Errors) => {
-  let errorsExist = false;
-  Object.keys(errors).forEach((key) => {
-    if (errors[key as keyof Errors]) {
-      errorsExist = true;
-    }
-  });
-  return errorsExist;
-});
+export const isValid = createSelector(
+  selectErrors,
+  selectLoanRequest,
+  (errors: Errors, loanRequest: LoanRequest) => {
+    let errorsExist = false;
+    Object.keys(errors).forEach((key) => {
+      if (errors[key as keyof Errors]) {
+        errorsExist = true;
+      }
+    });
+    Object.keys(loanRequest).forEach((key) => {
+      if (!loanRequest[key as keyof LoanRequest]) {
+        errorsExist = true;
+      }
+    });
+    return errorsExist;
+  }
+);
 export const selectNewAccountRedirect = (state: RootState) => {
   return state && state.landing && state.landing.toNewAccount;
+};
+export const selectDisqualifiedRedirect = (state: RootState) => {
+  return state && state.landing && state.landing.toDisqualified;
 };
 export const isLoading = (state: RootState) => {
   return state && state.landing && state.landing.loading;
@@ -113,9 +113,13 @@ export const postLoanRequest = (loanRequest: LoanRequest): AppThunk => (
   dispatch
 ) => {
   dispatch(setLoading());
-  mockFetchCall(loanRequest).then(() => {
+  mockFetchCall(loanRequest).then((response) => {
     dispatch(setLoading());
-    dispatch(setRouteToNewAccount());
+    if (response.status === 403 || response.status === 400) {
+      dispatch(setRouteToDisqualified());
+    } else {
+      dispatch(setRouteToNewAccount());
+    }
   });
 };
 

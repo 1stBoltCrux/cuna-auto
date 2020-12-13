@@ -14,7 +14,13 @@ interface Errors {
     estimatedCreditScore: string | null,
 }
 
+interface MockResponse {
+    status: number;
+    message: string;
+}
+
 export type {
     LoanRequest,
-    Errors
+    Errors,
+    MockResponse
 }
