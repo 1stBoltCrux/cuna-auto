@@ -43,9 +43,10 @@ const emailValidator = (email: string) => {
 
 const passwordValidator = (password: string) => {
   // regex shamelessly learned in Edwin Diaz's Udemy course "Learn to use Regular Expressions (Regex) in all programming languages and tools the easy way with Edwin Diaz"
-  // uses look-ahead to check for at least one capital letter, lowercase letter,
+  // (slightly edited)
+  // uses look-ahead to check for at least one lowercase letter,
   // digit and selection of symbols, white spaces are excluded as well - length min of 8 chars, max of 20
-  const regExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*\-\\])\S{8,20}$/g;
+  const regExp = /^(?=.*[a-z])((?=.*\d)|(?=.*[!@#$%^&*\-\\]))\S{8,20}$/g;
   return regExp.test(password);
 };
 
