@@ -3,31 +3,49 @@ import { useDispatch, useSelector } from "react-redux";
 import { StyledLandingContainer } from "./Landing.styles";
 import Input from "../UI/input/Input";
 import Button from "../UI/button/Button";
-import { selectLoanRequest, setLoanRequest, setErrors, isValid, selectErrors } from "./landingSlice";
-import { useHistory } from "react-router-dom";
+import {
+  selectLoanRequest,
+  setLoanRequest,
+  setErrors,
+  isValid,
+  selectErrors,
+  postLoanRequest,
+  selectNewAccountRedirect,
+} from "./landingSlice";
 import { min, max } from "../../constants/constants";
+import { Redirect } from "react-router-dom";
 
 const Landing = () => {
-  const history = useHistory();
   const loanRequestState = useSelector(selectLoanRequest);
-  const errors = useSelector(selectErrors)
+  const errors = useSelector(selectErrors);
+  const redirect = useSelector(selectNewAccountRedirect);
   const dispatch = useDispatch();
-  const canSubmit = useSelector(isValid)
+  const canSubmit = useSelector(isValid);
 
   const validate = (inputName: string, inputValue: string) => {
     switch (inputName) {
       case "autoPurchasePrice":
         if (!parseInt(inputValue)) {
-          dispatch(setErrors({inputName, inputErrorValue: "Please enter a valid purchase price."}))
+          dispatch(
+            setErrors({
+              inputName,
+              inputErrorValue: "Please enter a valid purchase price.",
+            })
+          );
         } else {
-          dispatch(setErrors({inputName, inputErrorValue: null}))
+          dispatch(setErrors({ inputName, inputErrorValue: null }));
         }
         break;
       case "estimatedIncome":
         if (!parseInt(inputValue)) {
-          dispatch(setErrors({inputName, inputErrorValue: "Please enter a valid estimated income."}))
+          dispatch(
+            setErrors({
+              inputName,
+              inputErrorValue: "Please enter a valid estimated income.",
+            })
+          );
         } else {
-          dispatch(setErrors({inputName, inputErrorValue: null}))
+          dispatch(setErrors({ inputName, inputErrorValue: null }));
         }
         break;
       case "estimatedCreditScore":
@@ -36,24 +54,30 @@ const Landing = () => {
           parseInt(inputValue) > max ||
           parseInt(inputValue) < min
         ) {
-          dispatch(setErrors({inputName, inputErrorValue: "Please enter a valid credit score between 300 and 850."}))
+          dispatch(
+            setErrors({
+              inputName,
+              inputErrorValue:
+                "Please enter a valid credit score between 300 and 850.",
+            })
+          );
         } else {
-          dispatch(setErrors({inputName, inputErrorValue: null}))
+          dispatch(setErrors({ inputName, inputErrorValue: null }));
         }
         break;
     }
   };
 
   const handleChange = (inputName: string, inputValue: string) => {
-    validate(inputName, inputValue)
+    validate(inputName, inputValue);
     dispatch(setLoanRequest({ ...loanRequestState, [inputName]: inputValue }));
   };
 
   const handleSubmit = () => {
-    history.push("/new-account");
+    dispatch(postLoanRequest(loanRequestState));
   };
 
-
+  console.log(redirect)
 
   return (
     <StyledLandingContainer>
@@ -108,6 +132,7 @@ const Landing = () => {
           ></Button>
         </div>
       </div>
+      {redirect ? <Redirect to="/new-account" /> : null}
     </StyledLandingContainer>
   );
 };

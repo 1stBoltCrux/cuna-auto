@@ -1,10 +1,18 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import {
+  createSlice,
+  PayloadAction,
+  createSelector,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
+import { AppThunk, RootState } from "../../app/store";
 import { LoanRequest, Errors } from "../../interfaces/interfaces";
+import { mockFetchCall } from "../../utilities/utilities";
 
 interface LandingState {
   loanRequest: LoanRequest;
   errors: Errors;
+  loading: boolean;
+  toNewAccount: boolean;
 }
 
 const initialState: LandingState = {
@@ -22,6 +30,8 @@ const initialState: LandingState = {
     estimatedYearlyIncome: null,
     estimatedCreditScore: null,
   },
+  loading: false,
+  toNewAccount: false
 };
 
 export const landingSlice = createSlice({
@@ -48,14 +58,16 @@ export const landingSlice = createSlice({
         [action.payload.inputName]: action.payload.inputErrorValue,
       };
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
+    setLoading: (state) => {
+      state.loading = !state.loading;
+    },
+    setRouteToNewAccount: (state) => {
+      state.toNewAccount = true;
+    }
   },
 });
 
-export const { setLoanRequest, setErrors } = landingSlice.actions;
+export const { setLoanRequest, setErrors, setLoading, setRouteToNewAccount } = landingSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -85,5 +97,19 @@ export const isValid = createSelector(selectErrors, (errors: Errors) => {
   });
   return errorsExist;
 });
+export const selectNewAccountRedirect = (state: RootState) => {
+  return state && state.landing && state.landing.toNewAccount
+}
+
+export const postLoanRequest = (loanRequest: LoanRequest): AppThunk => (
+  dispatch
+) => {
+  dispatch(setLoading());
+  mockFetchCall(loanRequest).then(() => {
+    console.log('ok')
+    dispatch(setLoading());
+    dispatch(setRouteToNewAccount());
+  });
+};
 
 export default landingSlice.reducer;

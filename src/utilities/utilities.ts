@@ -1,11 +1,11 @@
 import { LoanRequest } from "../interfaces/interfaces";
-
-const timeout = 500;
+import { timeout } from "../constants/constants";
 
 const mockFetchCall = (req: LoanRequest) => {
+  
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      return "OK 200";
+      resolve("ok 200");
     }, timeout);
   });
 };
