@@ -8,7 +8,7 @@ import { AppThunk, RootState } from "../../app/store";
 import { LoanRequest, Errors, MockResponse } from "../../interfaces/interfaces";
 import { mockFetchCall } from "../../utilities/utilities";
 
-interface LandingState {
+export interface LandingState {
   loanRequest: LoanRequest;
   errors: Errors;
   loading: boolean;
@@ -80,6 +80,8 @@ export const {
   setRouteToDisqualified,
   setDisqualifiedMessage,
 } = landingSlice.actions;
+
+console.log(setLoanRequest.type)
 
 export const selectLandingState = (state: RootState) => {
   return state && state.landing;
