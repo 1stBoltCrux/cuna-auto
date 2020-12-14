@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { User, NewAccountErrors } from "../../interfaces/interfaces";
 
-interface NewAccountState {
+export interface NewAccountState {
   user: User;
   errors: NewAccountErrors;
 }

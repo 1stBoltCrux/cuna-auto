@@ -1,12 +1,4 @@
 import landingReducer from "./landingSlice";
-import {
-  setLoanRequest,
-  setErrors,
-  setLoading,
-  setRouteToNewAccount,
-  setRouteToDisqualified,
-  setDisqualifiedMessage,
-} from "./landingSlice";
 import { LandingState } from "./landingSlice";
 
 const initialState: LandingState = {
@@ -70,7 +62,10 @@ describe("landing reducer", () => {
     expect(
       landingReducer(
         { ...initialState },
-        { type: "landing/setErrors", payload: { inputName: "autoMake", inputErrorValue: "Toyota" } }
+        {
+          type: "landing/setErrors",
+          payload: { inputName: "autoMake", inputErrorValue: "Toyota" },
+        }
       )
     ).toEqual({
       ...initialState,
@@ -81,6 +76,69 @@ describe("landing reducer", () => {
         estimatedYearlyIncome: null,
         estimatedCreditScore: null,
       },
+    });
+  });
+
+  it("should set the loading state to true", () => {
+    expect(
+      landingReducer(
+        {
+          ...initialState,
+        },
+        {
+          type: "landing/setLoading",
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      loading: true,
+    });
+  });
+
+  it("it should set toNewAccount to true", () => {
+    expect(
+      landingReducer(
+        {
+          ...initialState,
+        },
+        {
+          type: "landing/setRouteToNewAccount",
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      toNewAccount: true,
+    });
+  });
+  it("it should set toDisqualified to true", () => {
+    expect(
+      landingReducer(
+        {
+          ...initialState,
+        },
+        {
+          type: "landing/setRouteToDisqualified",
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      toDisqualified: true,
+    });
+  });
+  it("it should set the disqualified message", () => {
+    expect(
+      landingReducer(
+        {
+          ...initialState,
+        },
+        {
+          type: "landing/setDisqualifiedMessage",
+          payload: "You're disqualified pal.",
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      disqualifiedMessage: "You're disqualified pal.",
     });
   });
 });

@@ -2,10 +2,9 @@ import {
   createSlice,
   PayloadAction,
   createSelector,
-  createAsyncThunk,
 } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
-import { LoanRequest, Errors, MockResponse } from "../../interfaces/interfaces";
+import { LoanRequest, Errors } from "../../interfaces/interfaces";
 import { mockFetchCall } from "../../utilities/utilities";
 
 export interface LandingState {
