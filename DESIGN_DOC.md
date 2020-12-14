@@ -52,6 +52,10 @@
 
 1. All typescript interfaces present in the app live here.
 
+### Testing - 
+
+1. Currently tests are only implemented for the landing and newAccount reducers. More comprehensive testing, ESPECIALLY around the mockFetchCall and postLoanRequest functions would be ideal. Async/Redux specific testing is not an area I am by any means an expert in but I think these areas would prove to be important places for testing. If for nothing else, then because they take the longest to test "the old fashioned way". More clicks to make sure they're working correctly, and several conditional paths.
+
 
 
 
