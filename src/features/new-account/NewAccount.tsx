@@ -88,7 +88,7 @@ const NewAccount = () => {
         <Input
           placeholder="Enter Password"
           label="Password"
-          type="text"
+          type="password"
           name="password"
           handleChange={handleChange}
           errors={errors}
@@ -96,7 +96,7 @@ const NewAccount = () => {
         <Input
           placeholder="Repeat Password"
           label="Repeat Password"
-          type="text"
+          type="password"
           name="repeatPassword"
           handleChange={handleChange}
           errors={errors}

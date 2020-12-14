@@ -80,8 +80,6 @@ export const {
   setDisqualifiedMessage,
 } = landingSlice.actions;
 
-console.log(setLoanRequest.type)
-
 export const selectLandingState = (state: RootState) => {
   return state && state.landing;
 };

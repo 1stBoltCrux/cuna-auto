@@ -76,7 +76,6 @@ export const isValid = createSelector(
         errorsExist = true;
       }
     });
-    console.log(errorsExist)
     return errorsExist;
   }
 );
