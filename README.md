@@ -3,6 +3,7 @@
 Project is bootstrapped with CRA (CRA readme remains below) - and templated for TS and Redux - [https://github.com/reduxjs/cra-template-redux-typescript]
 
 ## Running code locally - 
+ * don't forget to run npm install/yarn install!
  * yarn start (boots on localhost:3000)
 
  ## Building - 
