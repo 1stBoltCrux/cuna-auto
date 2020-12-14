@@ -36,7 +36,7 @@
 
 #### Utilities
 
-1. Utilities contains the mockFetchCall function. This function is responsible for simulating a dummy response that is picked up in a thunk in the landing store.
+1. Utilities contains the mockFetchCall function. This function is responsible for simulating a dummy response that is collected in a thunk in the landing store.
 2. the mockFetchCall function determines the response by the value of the loanRequest that is submitted to it. The conditionals responses are designed to spec. 
 3. emailValidator and passwordValidator use regex matching to return boolean values if password/username are not valid.
 

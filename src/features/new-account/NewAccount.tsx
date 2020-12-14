@@ -6,7 +6,7 @@ import {
   selectErrors,
   setUser,
   setErrors,
-  isValid
+  isValid,
 } from "./newAccountSlice";
 import Input from "../UI/input/Input";
 import Button from "../UI/button/Button";
@@ -17,7 +17,6 @@ const NewAccount = () => {
   const user = useSelector(selectUser);
   const errors = useSelector(selectErrors);
   const canSubmit = useSelector(isValid);
-
 
   const handleChange = (inputName: string, inputValue: string) => {
     validate(inputName, inputValue);
@@ -70,34 +69,44 @@ const NewAccount = () => {
 
   return (
     <StyledNewAccountContainer>
+      <h3>Create an Account</h3>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta minima
+        blanditiis natus eligendi! Id delectus explicabo eius velit accusantium
+        facilis voluptatum temporibus cum culpa officia pariatur vel, ipsa
+        assumenda nobis!
+      </p>
       <div className="cuna-auto-loan-new-account-input-group">
-      <Input
-        placeholder="Enter Username"
-        label="Username"
-        type="text"
-        name="username"
-        handleChange={handleChange}
-        errors={errors}
-      ></Input>
-      <Input
-        placeholder="Enter Password"
-        label="Password"
-        type="text"
-        name="password"
-        handleChange={handleChange}
-        errors={errors}
-      ></Input>
-      <Input
-        placeholder="Repeat Password"
-        label="Repeat Password"
-        type="text"
-        name="repeatPassword"
-        handleChange={handleChange}
-        errors={errors}
-      ></Input>
-      <Button disabled={canSubmit} handleSubmit={() => alert("Account successfully created!")} text="Create Account"/>
+        <Input
+          placeholder="Enter Username"
+          label="Username"
+          type="text"
+          name="username"
+          handleChange={handleChange}
+          errors={errors}
+        ></Input>
+        <Input
+          placeholder="Enter Password"
+          label="Password"
+          type="text"
+          name="password"
+          handleChange={handleChange}
+          errors={errors}
+        ></Input>
+        <Input
+          placeholder="Repeat Password"
+          label="Repeat Password"
+          type="text"
+          name="repeatPassword"
+          handleChange={handleChange}
+          errors={errors}
+        ></Input>
+        <Button
+          disabled={canSubmit}
+          handleSubmit={() => alert("Account successfully created!")}
+          text="Create Account"
+        />
       </div>
-
     </StyledNewAccountContainer>
   );
 };
