@@ -56,6 +56,9 @@
 
 1. Currently tests are only implemented for the landing and newAccount reducers. More comprehensive testing, ESPECIALLY around the mockFetchCall and postLoanRequest functions would be ideal. Async/Redux specific testing is not an area I am by any means an expert in but I think these areas would prove to be important places for testing. If for nothing else, then because they take the longest to test "the old fashioned way". More clicks to make sure they're working correctly, and several conditional paths.
 
+### Styling - 
+1. There could definitely be more work done to decrease the amount of repeated code in the styled-components. There are some places in the styles of this application where styled-component overrides/props could be used to slim things down.
+
 
 
 
